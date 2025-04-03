@@ -4,22 +4,20 @@ import re
 import datetime
 
 def addtemp(maintext, template):
-	if template in maintext or template.lower() in maintext: return maintext
+	if template[:-2] in maintext or template.lower()[:-2] in maintext: return maintext
 	i = re.search("\\[\\[[cC]ategory:.*\\]\\]",maintext)
 	if not i: index = -1
 	else: index = i.start()
 	return maintext[:index]+"\n"+template+"\n"+maintext[index:]
 
 def isnew(page):
-	if(datetime.datetime.now() - page.latest_revision['timestamp']).days < 2: return True
-	return False
+	return (datetime.datetime.now() - page.latest_revision['timestamp']).days < 2
 	
 def isold(page):
-	if (datetime.datetime.now() - page.latest_revision['timestamp']).days > 730: return True
-	return False 
+	return (datetime.datetime.now() - page.latest_revision['timestamp']).days > 730
 
 def reftem(page):
-	kwords = "{{Reflist {{eflist <references"
+	kwords = "{{Reflist {{reflist <references"
 	for r in kwords.split(): 
 		if r in page.text: return page.text
 	page.text=addtemp(page.text,"{{Reflist}}")
