@@ -1,4 +1,4 @@
-import pywikibot as pw
+import pywikibot as pw # pyright: ignore[reportMissingImports]
 import editsettings as es
 import re
 import datetime
@@ -21,16 +21,17 @@ def reftem(page):
 	for r in kwords.split(): 
 		if r in page.text: return page.text
 	page.text=addtemp(page.text,"{{Reflist}}")
-	es.editsummery += "Added [[Template:Reflist|Reflist]]; "
+	es.put_summary("Reflist","Template","add")
 	return page.text
 
 def stubtem(page):
 	if len(page.text) >= 1000: return page.text
 	for i in re.findall("\\[\\[[cC]ategory:[sS]tub\\]\\]",page.text):
 		page.text = page.text.replace(i,"")
+		es.put_summary("Stub","Category","remove")
 	if page.isRedirectPage(): return page.text
 	page.text=addtemp(page.text,"{{Stub}}")
-	es.editsummery += "Added [[Template:Stub|Stub]]; "
+	es.put_summary("Stub","Template","add")
 	return page.text
 
 def unreftem(page):
@@ -38,18 +39,18 @@ def unreftem(page):
 	for r in refens.split():
 		if r in page.text: return page.text
 	page.text = "{{Unreferenced|date="+datetime.datetime.now().strftime("%b %Y")+"}}\n"+page.text
-	es.editsummery += "Added [[Template:Unreferenced|Unreferenced]]; "
+	es.put_summary("Unreferenced","Template","add")
 	return page.text
 
 def uncattem(page):
 	for i in re.findall("\\[\\[[cC]ategory:.*\\]\\]",page.text): return page.text
 	page.text = "{{Uncategorized|date="+datetime.datetime.now().strftime("%b %Y")+"}}\n"+page.text
-	es.editsummery += "Added [[Template:Uncategorized|Uncategorized]]; "
+	es.put_summary("Uncategorized","Template","add")
 	return page.text
 	
 def updatetem(page):
 	if not isold(page): return page.text
 	page.text = "{{Update|date="+datetime.datetime.now().strftime("%b %Y")+"}}\n"+page.text
-	es.editsummery += "Added [[Template:Update|Update]]; "
+	es.put_summary("Update","Template","add")
 	return page.text
 
