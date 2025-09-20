@@ -5,7 +5,7 @@ import editsettings as es
 def main():
 	site = pw.Site(es.sitecode, "wikipedia")
 #	allpages = site.allpages(namespace=0)
-	allpages = [pw.page.Page(site, "Kaimbot test page "+str(i)) for i in range(2)]
+	allpages = [pw.page.Page(site, "Kaimbot test page "+str(i)) for i in range(3)]
 	allpages.append(pw.page.Page(site, "AliExpress"))
 	tems = es.templates.split()
 	
