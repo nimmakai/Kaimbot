@@ -6,9 +6,9 @@ import datetime
 def addtemp(maintext, template):
 	if template[:-2] in maintext or template.lower()[:-2] in maintext: return maintext
 	i = re.search("\\[\\[[cC]ategory:.*\\]\\]",maintext)
-	if not i: index = -1
-	else: index = i.start()
-	return maintext[:index]+"\n"+template+"\n"+maintext[index:]
+	if not i: return maintext + "\n" + template
+	index = i.start()
+	return maintext[:index] + "\n" + template + "\n" + maintext[index:]
 
 def isnew(page):
 	return (datetime.datetime.now() - page.latest_revision['timestamp']).days < 2
