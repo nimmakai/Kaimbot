@@ -19,8 +19,8 @@ def main():
 		if "uncategorized" in tems: page.text=tf.uncattem(page)
 		if "update" in tems: page.text=tf.updatetem(page)
 
-		page.save(es.getsummery(),bot=True)
-		es.clear_summery()
+		page.save(es.getsummary(),bot=True)
+		es.clear_summary()
 	
 
 if __name__ == "__main__":
